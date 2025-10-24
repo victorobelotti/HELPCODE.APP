@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Metadados Melhorados -->
+    <title>HelpCode - Enviar Solicitação de Apoio</title>
+    <meta name="description" content="Envie seu pedido de apoio (médico, psicológico, segurança) de forma rápida e segura através da plataforma HelpCode.">
+    <meta name="author" content="HelpCode">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- A linha de Content-Security-Policy foi removida para garantir a compatibilidade com a abertura local de arquivos -->
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="header-content">
+        <div id="headerLogo"></div>
+        <p class="subtitle">Envie seu pedido de apoio de forma rápida e segura.</p>
+    </div>
+
+    <!-- Etapa 1: Seleção do Tipo de Apoio -->
+    <div id="step1">
+        <h1>Qual tipo de apoio você precisa?</h1>
+        <div class="button-options">
+            <button type="button" class="option-btn" data-value="medico">Médico</button>
+            <button type="button" class="option-btn" data-value="psicologico">Psicológico</button>
+            <button type="button" class="option-btn" data-value="institucional">Institucional</button>
+            <button type="button" class="option-btn" data-value="seguranca">Segurança</button>
+            <button type="button" class="option-btn" data-value="informacoes">Informações</button>
+        </div>
+    </div>
+
+    <!-- Etapa 2: Formulário de Solicitação -->
+    <form id="helpForm" class="hidden" novalidate>
+        <button type="button" id="back-to-step1" class="back-btn" aria-label="Voltar para a seleção de tipo de apoio">&larr; Voltar</button>
+        <h1>Formulário de Apoio</h1>
+        
+        <div class="form-group">
+            <!-- Acessibilidade: 'for' associado ao ID do input -->
+            <label for="tipoApoioDisplay">Tipo de Apoio Selecionado</label>
+            <input type="text" id="tipoApoioDisplay" readonly>
+            <input type="hidden" id="tipoApoio">
+        </div>
+
+        <div class="form-group">
+            <p>Você possui deficiência física? *</p>
+            <div class="radio-options">
+                <label for="deficienciaSim"><input type="radio" id="deficienciaSim" name="deficiencia" value="sim" required> Sim</label>
+                <label for="deficienciaNao"><input type="radio" id="deficienciaNao" name="deficiencia" value="nao" checked> Não</label>
+            </div>
+        </div>
+
+        <div id="deficienciaDetalhes" class="form-group hidden">
+            <p>Principais deficiências físicas:</p>
+            <div class="checkbox-options">
+                <label for="defVisual"><input type="checkbox" id="defVisual" name="deficienciaDetalhe" value="visual"> Visual</label>
+                <label for="defAuditiva"><input type="checkbox" id="defAuditiva" name="deficienciaDetalhe" value="auditiva"> Auditiva</label>
+                <label for="defMotora"><input type="checkbox" id="defMotora" name="deficienciaDetalhe" value="motora"> Motora</label>
+                <label for="defIntelectual"><input type="checkbox" id="defIntelectual" name="deficienciaDetalhe" value="intelectual"> Intelectual</label>
+                <label for="deficienciaOutras"><input type="checkbox" id="deficienciaOutras" name="deficienciaDetalhe" value="outras"> Outras</label>
+            </div>
+            <div class="form-group hidden" id="outrasDeficienciaText">
+                <label for="outrasDeficienciaInput">Especifique:</label>
+                <input type="text" id="outrasDeficienciaInput" name="outrasDeficienciaDetalhe">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="localizacao">Localização (endereço ou ponto de referência) *</label>
+            <textarea id="localizacao" rows="3" maxlength="250" required></textarea>
+            <div class="location-controls">
+                <button type="button" id="getLocationBtn">Usar Minha Localização Atual</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="telefone">Telefone para Contato (Opcional)</label>
+            <input type="tel" id="telefone" placeholder="(XX) XXXXX-XXXX">
+        </div>
+
+        <div class="form-group">
+            <label for="motivo">Motivo da Solicitação *</label>
+            <textarea id="motivo" rows="2" maxlength="150" required></textarea>
+            <div class="audio-controls">
+                <div class="audio-controls-row">
+                    <!-- Acessibilidade: aria-label para botões sem texto claro -->
+                    <button type="button" id="recordButton" aria-label="Iniciar gravação de áudio">Gravar Áudio</button>
+                    <button type="button" id="stopButton" aria-label="Parar gravação de áudio" disabled>Parar</button>
+                    <button type="button" id="deleteButton" aria-label="Apagar áudio gravado" disabled>Apagar</button>
+                </div>
+                <div class="audio-player-container hidden">
+                    <audio id="audioPlayer" controls></audio>
+                </div>
+                <span id="audioStatus"></span>
+            </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-submit">Enviar Solicitação</button>
+    </form>
+    
+    <!-- Acessibilidade: aria-live="polite" para leitores de tela anunciarem a mensagem -->
+    <div id="confirmationMessage" class="hidden" aria-live="polite"></div>
+</div>
+
+<img src="https://i.ibb.co/C07p9T0/logo-helpcode.png" alt="Logo HelpCode" class="helpcode-logo-small">
+
+<!-- Performance: 'defer' para carregamento não bloqueante -->
+<script src="app.js" defer></script>
+</body>
+</html>
